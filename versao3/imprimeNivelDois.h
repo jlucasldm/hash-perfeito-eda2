@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 int imprimeNivelDois(int m) {
 	FILE *fnivelum;
@@ -23,6 +24,7 @@ int imprimeNivelDois(int m) {
             printf("---posicao %d---\n", i);
 
             sprintf(filename, "%d", i);
+			strcat(filename, "aloc");
 	        if (!(fniveldois = fopen(filename,"r"))) {
 		    printf ("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filename);
 		    exit(-1);
