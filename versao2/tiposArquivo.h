@@ -35,6 +35,7 @@ b = coeficiente pertencente ao intervalo [0, p-1]
 m = quantidade de chaves, posições de distruibuição de chaves
 k = chave
 */
+
 int hash(int a, int b, int p, int m, int k){
     return (((a*k + b) % p) % m);
 }

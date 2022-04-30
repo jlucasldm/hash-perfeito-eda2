@@ -31,9 +31,11 @@ int imprimeNivelDois(int m) {
 	        fseek (fniveldois, 0, SEEK_SET);
             for(int j = 0; j < c.mtab * c.mtab; j ++){
                 fread (&r, sizeof (Registro), 1, fniveldois);
-				if(r.ocupado != 0){
+				if(&r == NULL){
+					printf("void\n");
+				}else if(r.ocupado == 1){
 					printf("chave: %d \tnome: %s \t idade: %d \t hash: %d\n", r.dado.chave, r.dado.nome, r.dado.idade, r.hash);
-				}else{
+				}else if(r.ocupado == 0){
 					printf("*\n");
 				}
             }

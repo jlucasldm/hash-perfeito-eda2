@@ -11,6 +11,10 @@ int insereRegistros(int m) {
     p = 101;
     char filename[3];
 
+    Registro raux;
+    Registro rvazio;
+    rvazio.ocupado = 0;
+
     fnivelum = fopen("nivelUm", "r+");
 
 	for (int i=0; i < m; i++) {
@@ -42,15 +46,53 @@ int insereRegistros(int m) {
 		    }   
         }
 
+        printf("-----------arquivo %s---------------\n", filename);
+
         fseek(fnivelum, (r.hash) * sizeof(Celula), SEEK_SET);
         fread(&c, sizeof(Celula), 1, fnivelum);
         
-        fseek(fniveldois, c.mtab * sizeof(Registro), SEEK_SET);
-        fwrite (&r, sizeof(Registro), 1, fniveldois);
+        //insercao sequencial
+        // fseek(fniveldois, c.mtab * sizeof(Registro), SEEK_SET);
+        // fwrite (&r, sizeof(Registro), 1, fniveldois);
 
         c.mtab += 1;
         fseek(fnivelum, (r.hash) * sizeof(Celula), SEEK_SET);
         fwrite(&c, sizeof(Celula), 1, fnivelum);
+
+        r.hash = hash(c.a, c.b, p, c.mtab * c.mtab , r.dado.chave);
+        for(int j = 0; j < c.mtab * c.mtab; j++){
+            fread(&raux, sizeof(Registro), 1, fniveldois);
+            //printf("hash: %d\n", r.hash);
+
+            //se nao nulo e a posicao esta vazia
+            if(c.mtab == 1){
+                printf("inserindo %d: em %d\n", r.dado.chave, r.hash);
+                fseek(fniveldois, 0, SEEK_SET);
+                fwrite(&r, sizeof(Registro), 1, fniveldois);
+                fseek(fniveldois, (j+1) * sizeof(Registro), SEEK_SET);
+
+            }else if(raux.ocupado != 0){
+                printf("realocando raux chave %d hash antigo: %d\t", raux.dado.chave, raux.hash);
+                raux.hash = hash(c.a, c.b, p, c.mtab * c.mtab , raux.dado.chave);
+                printf("hash novo: %d\n", raux.hash);
+                fseek(fniveldois, raux.hash * sizeof(Registro), SEEK_SET);
+                fwrite(&raux, sizeof(Registro), 1, fniveldois);
+                fseek(fniveldois, (j+1) * sizeof(Registro), SEEK_SET);
+
+                if(r.hash == j){
+                    printf("inserindo %d: em %d\n", r.dado.chave, r.hash);
+                    fseek(fniveldois, j * sizeof(Registro), SEEK_SET);
+                    fwrite(&r, sizeof(Registro), 1, fniveldois);
+                    fseek(fniveldois, (j+1) * sizeof(Registro), SEEK_SET);
+                }else if(raux.hash != j){
+                    printf("escrevendo vazio na posicao %d\n", j);
+                    fseek(fniveldois, j * sizeof(Registro), SEEK_SET);
+                    fwrite(&rvazio, sizeof(Registro), 1, fniveldois);
+                    fseek(fniveldois, (j+1) * sizeof(Registro), SEEK_SET);
+                }
+            }
+            
+        }
 
         fclose(fniveldois);
 

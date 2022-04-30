@@ -1,0 +1,105 @@
+insere registro
+0: *
+1: *
+2: *
+3: *
+4: *
+5: *
+6: *
+7: *
+8: *
+-----------arquivo 0---------------
+inserindo 10: em 0
+-----------arquivo 7---------------
+inserindo 22: em 0
+-----------arquivo 7---------------
+realocando raux chave 22 hash antigo: 0	hash novo: 1
+escrevendo vazio na posicao 0
+realocando raux chave 22 hash antigo: 1	hash novo: 1
+realocando raux chave 22 hash antigo: 1	hash novo: 1
+inserindo 37: em 2
+realocando raux chave 22 hash antigo: 1	hash novo: 1
+escrevendo vazio na posicao 3
+-----------arquivo 7---------------
+realocando raux chave 22 hash antigo: 1	hash novo: 8
+escrevendo vazio na posicao 1
+realocando raux chave 37 hash antigo: 2	hash novo: 3
+escrevendo vazio na posicao 2
+realocando raux chave 37 hash antigo: 3	hash novo: 3
+realocando raux chave 22 hash antigo: 8	hash novo: 8
+-----------arquivo 7---------------
+realocando raux chave 37 hash antigo: 3	hash novo: 14
+escrevendo vazio na posicao 3
+realocando raux chave 22 hash antigo: 8	hash novo: 9
+inserindo 52: em 8
+realocando raux chave 22 hash antigo: 9	hash novo: 9
+realocando raux chave 37 hash antigo: 14	hash novo: 14
+realocando raux chave 37 hash antigo: 14	hash novo: 14
+escrevendo vazio na posicao 15
+-----------arquivo 2---------------
+inserindo 60: em 0
+-----------arquivo 5---------------
+inserindo 70: em 0
+-----------arquivo 2---------------
+realocando raux chave 60 hash antigo: 0	hash novo: 0
+realocando raux chave 60 hash antigo: 0	hash novo: 0
+escrevendo vazio na posicao 1
+realocando raux chave 60 hash antigo: 0	hash novo: 0
+escrevendo vazio na posicao 2
+realocando raux chave 60 hash antigo: 0	hash novo: 0
+inserindo 72: em 3
+-----------arquivo 2---------------
+realocando raux chave 60 hash antigo: 0	hash novo: 3
+escrevendo vazio na posicao 0
+realocando raux chave 60 hash antigo: 3	hash novo: 3
+realocando raux chave 60 hash antigo: 3	hash novo: 3
+escrevendo vazio na posicao 4
+realocando raux chave 60 hash antigo: 3	hash novo: 3
+escrevendo vazio na posicao 5
+realocando raux chave 60 hash antigo: 3	hash novo: 3
+escrevendo vazio na posicao 6
+realocando raux chave 60 hash antigo: 3	hash novo: 3
+inserindo 75: em 7
+realocando raux chave 60 hash antigo: 3	hash novo: 3
+escrevendo vazio na posicao 8
+0: m: 1	a: 62	b: 32
+1: *
+2: m: 3	a: 10	b: 18
+3: *
+4: *
+5: m: 1	a: 46	b: 94
+6: *
+7: m: 4	a: 23	b: 88
+8: *
+impressao de segundo nivel
+---posicao 0---
+chave: 10 	nome: luana 	 idade: 3 	 hash: 0
+---posicao 2---
+*
+*
+*
+chave: 60 	nome: joao 	 idade: 67 	 hash: 3
+*
+*
+*
+chave: 75 	nome: mila 	 idade: 34 	 hash: 7
+*
+---posicao 5---
+chave: 70 	nome: gabriel 	 idade: 54 	 hash: 0
+---posicao 7---
+*
+*
+*
+*
+*
+*
+*
+*
+chave: 52 	nome: jorge 	 idade: 89 	 hash: 8
+chave: 22 	nome: laura 	 idade: 8 	 hash: 9
+*
+*
+*
+*
+chave: 37 	nome: tadeu 	 idade: 5 	 hash: 14
+*
