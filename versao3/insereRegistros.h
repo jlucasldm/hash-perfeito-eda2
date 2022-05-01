@@ -6,13 +6,13 @@ int insereRegistros(int m) {
     FILE *fniveldois;
 	Registro r;
     Celula c;
-    p = 101;
     char filename[3];
     fnivelum = fopen("nivelUm", "r+");
 
 	for (int i=0; i < m; i++) {
-        scanf("%d", &r.dado.chave);
-        scanf("%19s", r.dado.nome);
+        scanf("%d\n", &r.dado.chave);
+        //fgets(r.dado.nome, 20, stdin);
+        scanf("%[^\n]%*c", r.dado.nome);
         scanf("%d", &r.dado.idade);
         r.hash = hash(a, b, p, m, r.dado.chave);
         r.ocupado = 1;

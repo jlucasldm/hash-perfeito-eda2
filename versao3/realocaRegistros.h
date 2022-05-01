@@ -3,6 +3,11 @@
 int realocaRegistros(char filename[3], int tamanho, int a, int b, Celula c){
     FILE *f;
     FILE *falocado;
+
+    if(tamanho == 1){
+        c.a = 0;
+        c.b = 0;
+    }
     
     char filenameAlocado[10] = "";
     strcat(filenameAlocado, filename);
@@ -45,6 +50,7 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b, Celula c){
 	    }else if(rconsulta.ocupado == 1){
             c.a = (rand() % 102) + 1;
 			c.b = rand() % 101;
+            i = 0;
 	    }
     }
 

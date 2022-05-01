@@ -22,6 +22,7 @@ int main(){
             scanf("%d", &m);
             criaArquivoNivelUm(m);
             insereRegistros(m);
+            printf("estrutura de hashing perfeito criada\n");
             break;
 
         case 'c':
@@ -44,7 +45,7 @@ int main(){
             break;
 
         case 'n':
-            printf("%d", p * (p-1));
+            printf("%d\n", p * (p-1));
             break;
 
         default:

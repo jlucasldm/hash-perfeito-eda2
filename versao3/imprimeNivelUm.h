@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-int imprimeNivelUm(int m) {
+int imprimeNivelUm() {
 	FILE *f;
 	FILE *fniveldois;
 	char filename[10];
@@ -14,6 +14,8 @@ int imprimeNivelUm(int m) {
 		exit(-1);
 	}
 
+	fseek(f, 0, SEEK_END);
+    int m = ftell(f)/sizeof(Celula);
 	fseek (f, 0, SEEK_SET);
 	
 	printf("hashing perfeito: primeiro nivel\n");

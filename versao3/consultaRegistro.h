@@ -23,7 +23,7 @@ int consultaRegistro(int chave){
     sprintf(filename, "%d", posicao_primaria);
     strcat(filename, "aloc");
 
-    if (!(fniveldois = fopen(filename,"r+"))) {
+    if (!(fniveldois = fopen(filename,"r"))) {
 	    printf ("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filename);
 	    exit(-1);
 	}
