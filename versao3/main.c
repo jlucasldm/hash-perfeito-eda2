@@ -3,71 +3,56 @@
 #include "imprimeNivelUm.h"
 #include "criaArquivoNivelUm.h"
 #include "imprimeNivelDois.h"
-#include "insereRegistros.h"
 #include "realocaRegistros.h"
+#include "insereRegistros.h"
+#include "consultaRegistro.h"
+#include "imprimeTodosNiveisDois.h"
+
 
 int main(){
     char entrada;
+    int m;
+    int c;
+    int indice;
     scanf("%c", &entrada);
 
-    if(entrada == 'i'){
-        printf("insere registro\n");
-        int m;
-        scanf("%d", &m);
-        criaArquivoNivelUm(m);            
-        imprimeNivelUm(m);
-        insereRegistros(m);
-        imprimeNivelUm(m);
-        // imprimeNivelDois(m);
-        realocaRegistros("0", 1, 0, 0);
-        realocaRegistros("2", 3, 10, 18);
-        realocaRegistros("5", 1, 0, 0);
-        realocaRegistros("7", 4, 23, 88);
-        imprimeNivelDois(m);
+    while (entrada != 'e'){
+        switch (entrada){
+        case 'i':
+            scanf("%d", &m);
+            criaArquivoNivelUm(m);
+            insereRegistros(m);
+            break;
+
+        case 'c':
+            scanf("%d", &c);
+            consultaRegistro(c);
+            break;
+
+        case 'p':
+            imprimeNivelUm(m);
+            break;
+
+        case 's':
+            scanf("%d", &indice);
+            imprimeNivelDois(indice);
+            break;
+
+        case 'h':
+            imprimeNivelUm(m);
+            imprimeTodosNiveisDois();
+            break;
+
+        case 'n':
+            printf("%d", p * (p-1));
+            break;
+
+        default:
+            break;
+        }
+
+        scanf("%c", &entrada);
     }
-
-    // while (entrada != 'e'){
-    //     switch (entrada){
-    //     case 'i':
-    //         printf("insere registro\n");
-    //         int m;
-    //         scanf("%d", &m);
-    //         criaArquivoNivelUm(m);
-    //         imprimeNivelUm(m);
-    //         criaArquivoTemporario(m);
-    //         imprimeNivelUm(m);
-    //         imprimeTemporario(m);
-    //         criaNivelDois(m);
-    //         imprimeNivelUm(m);
-    //         imprimeNivelDois(m);
-    //         break;
-
-    //     case 'c':
-    //         printf("consulta registro\n");
-    //         break;
-
-    //     case 'p':
-    //         printf("imprime primeiro nivel da estrutura de hashing\n");
-    //         break;
-
-    //     case 's':
-    //         printf("imprime segundo nivel da estrutura de hashing\n");
-    //         break;
-
-    //     case 'h':
-    //         printf("imprime estrutura global\n");
-    //         break;
-
-    //     case 'n':
-    //         printf("cardinalidade do conjunto de funções de hashing universal\n");
-    //         break;
-
-    //     default:
-    //         break;
-    //     }
-
-    //     scanf("%c", &entrada);
-    // }
 
     return 0;
 }

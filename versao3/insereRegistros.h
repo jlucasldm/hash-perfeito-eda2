@@ -6,16 +6,13 @@ int insereRegistros(int m) {
     FILE *fniveldois;
 	Registro r;
     Celula c;
-    int a = 3;
-    int b = 42;
     p = 101;
     char filename[3];
-
     fnivelum = fopen("nivelUm", "r+");
 
 	for (int i=0; i < m; i++) {
         scanf("%d", &r.dado.chave);
-        scanf("%s", &r.dado.nome);
+        scanf("%19s", r.dado.nome);
         scanf("%d", &r.dado.idade);
         r.hash = hash(a, b, p, m, r.dado.chave);
         r.ocupado = 1;
@@ -55,6 +52,16 @@ int insereRegistros(int m) {
         fclose(fniveldois);
 
 	}
+
+    fseek(fnivelum, 0, SEEK_SET);
+    for(int i = 0; i < m; i++){
+        fread(&c, sizeof(Celula), 1, fnivelum);
+        if(c.mtab > 0){
+            sprintf(filename, "%d", i);
+            realocaRegistros(filename, c.mtab, c.a, c.b, c);
+        }
+    }
+
     fclose(fnivelum);
 
     return 1;

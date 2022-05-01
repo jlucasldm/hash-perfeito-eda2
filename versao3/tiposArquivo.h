@@ -3,6 +3,8 @@ const int PRIMOS[] = {2, 3, 5, 7, 11, 13, 17, 19, 23,
                     61, 67, 71, 73, 39, 83, 89, 97, 101};
 
 int p;
+int a = 3;
+int b = 42;
 int cadeias = 0;
 int cadeias_m;
 

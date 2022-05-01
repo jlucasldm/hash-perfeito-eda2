@@ -1,7 +1,6 @@
-#include "consultaRegistro.h"
 #include <string.h>
 
-int realocaRegistros(char filename[3], int tamanho, int a, int b){
+int realocaRegistros(char filename[3], int tamanho, int a, int b, Celula c){
     FILE *f;
     FILE *falocado;
     
@@ -32,11 +31,8 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b){
 
 
     for(int i = 0; i < tamanho; i++){
-        printf("%d: ", i);
         fread (&raux, sizeof(Registro), 1, f);
-        printf("chave: %d ", raux.dado.chave);
         pos = hash(a, b, p, tamanho*tamanho, raux.dado.chave);
-        printf("pos: %d\n", pos);
         
         fseek(falocado, (pos) * sizeof(Registro), SEEK_SET);
         fread(&rconsulta, sizeof(Registro), 1, falocado);
@@ -47,7 +43,8 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b){
             fwrite (&raux, sizeof(Registro), 1, falocado);
             fseek(falocado, 0, SEEK_SET);
 	    }else if(rconsulta.ocupado == 1){
-		    printf("ocupado\n");
+            c.a = (rand() % 102) + 1;
+			c.b = rand() % 101;
 	    }
     }
 
