@@ -4,6 +4,7 @@
 int realocaRegistros(char filename[3], int tamanho, int a, int b){
     FILE *f;
     FILE *falocado;
+    
     char filenameAlocado[10] = "";
     strcat(filenameAlocado, filename);
     strcat(filenameAlocado, "aloc");
@@ -13,14 +14,7 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b){
 	    exit(-1);
 	}
 
-    falocado = fopen(filenameAlocado, "r+");
-
-    if(falocado == NULL){
-		if (!(f = fopen(filenameAlocado,"w+"))) {
-	    printf ("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filenameAlocado);
-	    exit(-1);
-    	}
-    }
+    falocado = fopen(filenameAlocado,"w+");
     
     Registro r;
     Registro raux;
@@ -28,11 +22,14 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b){
     r.ocupado = 0;
     int pos;
 
-    for(int i = 0; i < (tamanho*tamanho) - tamanho; i++){
+    for(int i = 0; i < (tamanho*tamanho); i++){
         fwrite (&r, sizeof(Registro), 1, falocado);
     }
 
+
     fseek(falocado, 0, SEEK_SET);
+    fseek(f, 0, SEEK_SET);
+
 
     for(int i = 0; i < tamanho; i++){
         printf("%d: ", i);
@@ -43,6 +40,7 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b){
         
         fseek(falocado, (pos) * sizeof(Registro), SEEK_SET);
         fread(&rconsulta, sizeof(Registro), 1, falocado);
+        fseek(falocado, 0, SEEK_SET);
 	    
         if (rconsulta.ocupado == 0){
             fseek(falocado, (pos) * sizeof(Registro), SEEK_SET);

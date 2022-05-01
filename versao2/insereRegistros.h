@@ -74,6 +74,7 @@ int insereRegistros(int m) {
             }else if(raux.ocupado != 0){
                 printf("realocando raux chave %d hash antigo: %d\t", raux.dado.chave, raux.hash);
                 raux.hash = hash(c.a, c.b, p, c.mtab * c.mtab , raux.dado.chave);
+
                 printf("hash novo: %d\n", raux.hash);
                 fseek(fniveldois, raux.hash * sizeof(Registro), SEEK_SET);
                 fwrite(&raux, sizeof(Registro), 1, fniveldois);

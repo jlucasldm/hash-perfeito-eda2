@@ -18,12 +18,12 @@ int main(){
         imprimeNivelUm(m);
         insereRegistros(m);
         imprimeNivelUm(m);
+        // imprimeNivelDois(m);
+        realocaRegistros("0", 1, 0, 0);
+        realocaRegistros("2", 3, 10, 18);
+        realocaRegistros("5", 1, 0, 0);
+        realocaRegistros("7", 4, 23, 88);
         imprimeNivelDois(m);
-        realocaRegistros("0aloc", 1, 0, 0);
-        realocaRegistros("2aloc", 3, 10, 18);
-        realocaRegistros("5aloc", 1, 0, 0);
-        realocaRegistros("7aloc", 4, 23, 88);
-        //imprimeNivelDois(m);
     }
 
     // while (entrada != 'e'){

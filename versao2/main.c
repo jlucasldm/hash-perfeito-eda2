@@ -7,6 +7,18 @@
 #include "realocaRegistros.h"
 
 int main(){
+    remove("0");
+    remove("1");
+    remove("2");
+    remove("3");
+    remove("4");
+    remove("5");
+    remove("6");
+    remove("7");
+    remove("8");
+    remove("9");
+    remove("nivelUm");
+
     char entrada;
     scanf("%c", &entrada);
 
