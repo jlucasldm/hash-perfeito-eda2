@@ -8,7 +8,8 @@ typedef struct{
     int b;          //coeficiente do hash
 } Celula;
 
-int criaArquivoNivelUm(int m);
+//Função responsável por criar a tabela de nível um. Recebe um valor m, tamanho de registros, 
+int criaArquivoNivelUm(int m, int p, int a_global, int b_global);
 
 int hash(int a, int b, int p, int m, int k);
 

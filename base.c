@@ -3,7 +3,7 @@
 
 #include "base.h"
 
-int criaArquivoNivelUm(int m) {
+int criaArquivoNivelUm(int m, int p, int a_global, int b_global) {
 	FILE *f;
 	
 	f = fopen("nivelUm", "r+b");
@@ -28,11 +28,17 @@ int criaArquivoNivelUm(int m) {
 				c.a = 23;
 				c.b = 88;
 			}else{
-				c.a = (rand() % 102) + 1;
-				c.b = rand() % 101;
+				c.a = (rand() % p) + 1;
+				c.b = rand() % p;
 			}
 			fwrite (&c, sizeof(Celula), 1, f);
 		}
+
+		fseek(f, 0, SEEK_END);
+		fwrite(&p, sizeof(int), 1, f);
+
+		fwrite(&a_global, sizeof(int), 1, f);
+		fwrite(&b_global, sizeof(int), 1, f);
 			
 		fclose(f);
 	}

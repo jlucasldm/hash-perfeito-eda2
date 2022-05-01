@@ -14,9 +14,9 @@ typedef struct{
     Dados dado;
 } Registro;
 
-int insereRegistros(int m, int a, int b, int p);
+int insereRegistros(int m, int *a, int *b, int *p);
 
-int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, Celula c);
+int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, int id_celula);
 
 int consultaRegistro(int chave, int a, int b, int p);
 

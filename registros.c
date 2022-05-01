@@ -9,34 +9,38 @@ const int PRIMOS[] = {2, 3, 5, 7, 11, 13, 17, 19, 23,
                       29, 31, 37, 41, 43, 47, 53, 59,
                       61, 67, 71, 73, 39, 83, 89, 97, 101};
 
-int insereRegistros(int m, int a, int b, int p) {
+int insereRegistros(int m, int *a, int *b, int *p) {
     FILE *fnivelum;
     FILE *fniveldois;
     Registro r;
     Celula c;
     char filename[3];
-    fnivelum = fopen("nivelUm", "r+b");
 
     for (int i=0; i < m; i++) {
         scanf("%d\n", &r.dado.chave);
-        //fgets(r.dado.nome, 20, stdin);
         scanf("%[^\n]%*c", r.dado.nome);
         scanf("%d", &r.dado.idade);
-        r.hash = hash(a, b, p, m, r.dado.chave);
+        r.hash = hash(*a, *b, *p, m, r.dado.chave);
         r.ocupado = 1;
 
+        
+        if (i == 0){
 
-        // if (i == 0){
-        //     int j = 0;
-        //     p = PRIMOS[0];
-        //     while (p <= r.dado.chave){
-        //         j++;
-        //         p = PRIMOS[j];
-        //     }
-        // }
+            //se quiser manter o p global, comentar o trecho abaixo
+            int j = 0;
+            *p = PRIMOS[0];
+            while (*p <= r.dado.chave){
+                j++;
+                *p = PRIMOS[j];
+            }
 
+            *a = (rand() % *p) + 1;
+            *b = rand() % *p;
 
-        //criando so arquivos individuais
+            criaArquivoNivelUm(m, *p, *a, *b);
+            fnivelum = fopen("nivelUm", "r+b");
+        }
+
         sprintf(filename, "%d", r.hash);
         fniveldois = fopen(filename, "r+b");
 
@@ -66,7 +70,7 @@ int insereRegistros(int m, int a, int b, int p) {
         fread(&c, sizeof(Celula), 1, fnivelum);
         if(c.mtab > 0){
             sprintf(filename, "%d", i);
-            realocaRegistros(filename, c.mtab, c.a, c.b, p, c);
+            realocaRegistros(filename, c.mtab, c.a, c.b, *p, i);
         }
     }
 
@@ -75,14 +79,32 @@ int insereRegistros(int m, int a, int b, int p) {
     return 1;
 }
 
-int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, Celula c){
+int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, int id_celula){
     FILE *f;
     FILE *falocado;
+    FILE *fnivelum;
+    Celula c;
+
+    if (!(fnivelum = fopen("nivelUm","r+b"))) {
+        printf ("Erro na abertura do arquivo \"nivelUm\" - Programa abortado\n");
+        exit(-1);
+    }
+
+    fseek(fnivelum, id_celula * sizeof(Celula), SEEK_SET);
+    fread(&c, sizeof(Celula), 1, fnivelum);
+    fseek(fnivelum, 0, SEEK_SET);
 
     if(tamanho == 1){
         c.a = 0;
         c.b = 0;
+    }else{
+        c.a = a;
+        c.b = b;
     }
+    
+    fseek(fnivelum, id_celula * sizeof(Celula), SEEK_SET);
+    fwrite(&c, sizeof(Celula), 1, fnivelum);
+    fseek(fnivelum, 0, SEEK_SET);
 
     char filenameAlocado[10] = "";
     strcat(filenameAlocado, filename);
@@ -122,15 +144,23 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, Celula 
             fseek(falocado, (pos) * sizeof(Registro), SEEK_SET);
             fwrite (&raux, sizeof(Registro), 1, falocado);
             fseek(falocado, 0, SEEK_SET);
+
         }else if(rconsulta.ocupado == 1){
-            c.a = (rand() % 102) + 1;
-            c.b = rand() % 101;
-            i = 0;
+            c.a = (rand() % p) + 1;
+            c.b = rand() % p;
+
+            fclose(f);
+            fclose(falocado);
+            fclose(fnivelum);
+
+            realocaRegistros(filename, tamanho, c.a, c.b, p, id_celula);
+            return 1;
         }
     }
 
     fclose(f);
     fclose(falocado);
+    fclose(fnivelum);
     return 1;
 }
 
@@ -146,7 +176,7 @@ int consultaRegistro(int chave, int a, int b, int p){
     }
 
     fseek(fnivelum, 0, SEEK_END);
-    int m = ftell(fnivelum)/sizeof(Celula);
+    int m = (ftell(fnivelum) - 3*sizeof(int))/sizeof(Celula);
     int hash_secundario;
 
     int posicao_primaria = hash(a, b, p, m, chave);

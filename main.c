@@ -13,14 +13,22 @@ int main(){
     int m;
     int c;
     int indice;
+    FILE *f;
     scanf("%c", &entrada);
+
+    f = fopen("nivelUm", "r+b");
+    if(f != NULL){
+        fseek(f, -3*sizeof(int), SEEK_END);
+        fread(&p, sizeof(int), 1, f);
+        fread(&a, sizeof(int), 1, f);
+        fread(&b, sizeof(int), 1, f);
+    }
 
     while (entrada != 'e'){
         switch (entrada){
         case 'i':
             scanf("%d", &m);
-            criaArquivoNivelUm(m);
-            insereRegistros(m, a, b, p);
+            insereRegistros(m, &a, &b, &p);
             printf("estrutura de hashing perfeito criada\n");
             break;
 

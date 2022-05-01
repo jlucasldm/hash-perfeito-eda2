@@ -19,7 +19,7 @@ int imprimeNivelUm(int a, int b, int p) {
     }
 
     fseek(f, 0, SEEK_END);
-    int m = ftell(f)/sizeof(Celula);
+    int m = (ftell(f) - 3*sizeof(int))/sizeof(Celula);
     fseek (f, 0, SEEK_SET);
 
     printf("hashing perfeito: primeiro nivel\n");
@@ -31,7 +31,6 @@ int imprimeNivelUm(int a, int b, int p) {
         fread (&c, sizeof (Celula), 1, f);
         if(c.mtab != 0){
             printf("%d:", i);
-            //printf("m: %d\ta: %d\tb: %d\n", c.mtab, c.a, c.b);
 
             sprintf(filename, "%d", i);
             strcat(filename, "aloc");
@@ -77,24 +76,27 @@ int imprimeNivelDois(int indice, int p) {
     printf("parametro b: %d\n", c.b);
     printf("numero primo: %d\n", p);
 
-    sprintf(filename, "%d", indice);
-    strcat(filename, "aloc");
-    if (!(fniveldois = fopen(filename,"r"))) {
-        printf ("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filename);
-        exit(-1);
-    }
-
-    fseek (fniveldois, 0, SEEK_SET);
-    for(int j = 0; j < c.mtab * c.mtab; j ++){
-        fread (&r, sizeof (Registro), 1, fniveldois);
-        if(r.ocupado != 0){
-            printf("%d: ", j);
-            printf("%d\n", r.dado.chave);
+    if(c.mtab > 0){
+        sprintf(filename, "%d", indice);
+        strcat(filename, "aloc");
+        if (!(fniveldois = fopen(filename,"r"))) {
+            printf ("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filename);
+            exit(-1);
         }
+
+        fseek (fniveldois, 0, SEEK_SET);
+        for(int j = 0; j < c.mtab * c.mtab; j ++){
+            fread (&r, sizeof (Registro), 1, fniveldois);
+            if(r.ocupado != 0){
+                printf("%d: ", j);
+                printf("%d\n", r.dado.chave);
+            }
+        }
+        
+        fclose(fniveldois);
     }
 
     fclose(fnivelum);
-    fclose(fniveldois);
     return 1;
 }
 
@@ -111,7 +113,7 @@ int imprimeTodosNiveisDois(int p){
     }
 
     fseek(fnivelum, 0, SEEK_END);
-    int tam = ftell(fnivelum)/sizeof(Celula);
+    int tam = (ftell(fnivelum) - 3*sizeof(int))/sizeof(Celula);
     fseek (fnivelum, 0, SEEK_SET);
 
     for (int i=0; i < tam; i++) {
