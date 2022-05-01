@@ -1,13 +1,12 @@
 #include <stdio.h>
-#include "tiposArquivo.h"
-#include "imprimeNivelUm.h"
-#include "criaArquivoNivelUm.h"
-#include "imprimeNivelDois.h"
-#include "realocaRegistros.h"
-#include "insereRegistros.h"
-#include "consultaRegistro.h"
-#include "imprimeTodosNiveisDois.h"
 
+#include "base.h"
+#include "impressao.h"
+#include "registros.h"
+
+int p = 101;
+int a = 3;
+int b = 42;
 
 int main(){
     char entrada;
@@ -21,27 +20,27 @@ int main(){
         case 'i':
             scanf("%d", &m);
             criaArquivoNivelUm(m);
-            insereRegistros(m);
+            insereRegistros(m, a, b, p);
             printf("estrutura de hashing perfeito criada\n");
             break;
 
         case 'c':
             scanf("%d", &c);
-            consultaRegistro(c);
+            consultaRegistro(c, a, b, p);
             break;
 
         case 'p':
-            imprimeNivelUm(m);
+            imprimeNivelUm(a, b, p);
             break;
 
         case 's':
             scanf("%d", &indice);
-            imprimeNivelDois(indice);
+            imprimeNivelDois(indice, p);
             break;
 
         case 'h':
-            imprimeNivelUm(m);
-            imprimeTodosNiveisDois();
+            imprimeNivelUm(a, b, p);
+            imprimeTodosNiveisDois(p);
             break;
 
         case 'n':
