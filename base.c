@@ -12,11 +12,11 @@ A função cria um arquivo contendo m células e, no final do arquivo, armazena 
 int criaArquivoNivelUm(int m, int p, int a_global, int b_global) {
 	FILE *f;
 	
-	f = fopen("nivelUm", "r+b");
+	f = fopen("nivelUm.dat", "r+b");
 
 	//Criação do arquivo da tabela de nível um "nivelUm".
 	if(f == NULL){
-		if (!(f = fopen("nivelUm","w+b"))){
+		if (!(f = fopen("nivelUm.dat","w+b"))){
 			printf ("Erro na criacao do arquivo \"nivelUm\".");
 			exit(-1);
 		}
@@ -30,6 +30,7 @@ int criaArquivoNivelUm(int m, int p, int a_global, int b_global) {
 		Escolhemos definir manualmente os coeficientes de a e b para as células de índice 0, 2, 5 e 7
 		para controle e teste de acordo com os exemplos utilizados em sala e com os arquivos testes
 		disponibilizados.
+        Caso seja necessario definir outros coeficientes de segundo nível manualmente, favor editar o código abaixo.
 		*/
 		for (int i = 0; i < m; i++) {
 			if(i == 0 || i == 5){

@@ -20,7 +20,7 @@ int imprimeNivelUm(int a, int b, int p) {
     Celula c;
 
     //Abertura da tabela de nível um.
-    if (!(f = fopen("nivelUm","r"))) {
+    if (!(f = fopen("nivelUm.dat","r"))) {
         printf ("Erro na abertura do arquivo \"nivelUm\" - Programa abortado\n");
         exit(-1);
     }
@@ -44,7 +44,7 @@ int imprimeNivelUm(int a, int b, int p) {
             printf("%d:", i);
 
             sprintf(filename, "%d", i);
-            strcat(filename, "aloc");
+            strcat(filename, "aloc.dat");
 
             //Abertura do arquivo [índice_célula]aloc.dat, onde os registros estão devidamente alocados.
             if (!(fniveldois = fopen(filename,"r"))) {
@@ -84,7 +84,7 @@ int imprimeNivelDois(int indice, int p) {
     char filename[10];
 
     //Abertura da tabela de primeiro nível.
-    if (!(fnivelum = fopen("nivelUm","r"))) {
+    if (!(fnivelum = fopen("nivelUm.dat","r"))) {
         printf ("Erro na abertura do arquivo \"nivelUm\" - Programa abortado\n");
         exit(-1);
     }
@@ -102,7 +102,7 @@ int imprimeNivelDois(int indice, int p) {
     //Checagem se existe registros atribuídos ao índice.
     if(c.mtab > 0){
         sprintf(filename, "%d", indice);
-        strcat(filename, "aloc");
+        strcat(filename, "aloc.dat");
 
         //Abertura do arquivo de nível dois do dado índice.
         if (!(fniveldois = fopen(filename,"r"))) {
@@ -143,7 +143,7 @@ int imprimeTodosNiveisDois(int p){
     char filename[10];
 
     //Abertura da tabela de primeiro nível.
-    if (!(fnivelum = fopen("nivelUm","r"))) {
+    if (!(fnivelum = fopen("nivelUm.dat","r"))) {
         printf ("Erro na abertura do arquivo \"nivelUm\" - Programa abortado\n");
         exit(-1);
     }
@@ -165,7 +165,7 @@ int imprimeTodosNiveisDois(int p){
             printf("numero primo: %d\n", p);
 
             sprintf(filename, "%d", i);
-            strcat(filename, "aloc");
+            strcat(filename, "aloc.dat");
 
             //Abertura de [índice_células]aloc.dat.
             if (!(fniveldois = fopen(filename,"r"))) {

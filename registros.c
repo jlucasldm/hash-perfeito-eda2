@@ -35,20 +35,21 @@ int insereRegistros(int m, int *a, int *b, int *p) {
         primo p, e coeficientes de primeiro nível a e b.
         */
         if (i == 0){
-            //////caso opte por manter os valores de p, a e b definidos em main.c, comentar o trecho abaixo/////
-            int j = 0;
-            *p = PRIMOS[0];
-            while (*p <= r.dado.chave){
-                j++;
-                *p = PRIMOS[j];
-            }
-
-            *a = (rand() % *p) + 1;
-            *b = rand() % *p;
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////Este trecho irá gerar um número primo levando em conta a maior chave inserida, e posteriormente irá gerar a e b modularizados em p/////
+            ///////////Deixamos essa parte comentada, pois, nos exemplos em slide e nos arquivos teste é necessario a pré definição de valores//////////
+            //int j = 0;
+            //*p = PRIMOS[0];
+            //while (*p <= r.dado.chave){
+            //    j++;
+            //    *p = PRIMOS[j];
+            //}
+            //
+            //*a = (rand() % *p) + 1;
+            //*b = rand() % *p;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             criaArquivoNivelUm(m, *p, *a, *b);
-            fnivelum = fopen("nivelUm", "r+b");
+            fnivelum = fopen("nivelUm.dat", "r+b");
         }
 
         //Definindo posição do registro na tabela de nível um
@@ -115,7 +116,7 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, int id_
     Celula c;
 
     //Abertura da tabela de nível um.
-    if (!(fnivelum = fopen("nivelUm","r+b"))) {
+    if (!(fnivelum = fopen("nivelUm.dat","r+b"))) {
         printf ("Erro na abertura do arquivo \"nivelUm\" - Programa abortado\n");
         exit(-1);
     }
@@ -140,7 +141,7 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, int id_
 
     char filenameAlocado[10] = "";
     strcat(filenameAlocado, filename);
-    strcat(filenameAlocado, "aloc");
+    strcat(filenameAlocado, "aloc.dat");
 
     //Criação do arquivo [índice_celula]aloc.dat
     if (!(f = fopen(filename,"r+b"))) {
@@ -198,6 +199,7 @@ int realocaRegistros(char filename[3], int tamanho, int a, int b, int p, int id_
     }
 
     fclose(f);
+    remove(filename);
     fclose(falocado);
     fclose(fnivelum);
     return 1;
@@ -217,7 +219,7 @@ int consultaRegistro(int chave, int a, int b, int p){
     Registro r;
 
     //Abertura da tabela de nível um.
-    if (!(fnivelum = fopen("nivelUm","r"))) {
+    if (!(fnivelum = fopen("nivelUm.dat","r"))) {
         printf ("Erro na abertura do arquivo \"nivelUm\" - Programa abortado\n");
         exit(-1);
     }
@@ -225,7 +227,6 @@ int consultaRegistro(int chave, int a, int b, int p){
     //Consultando a quantidade de células do arquivo nivelUm.
     fseek(fnivelum, 0, SEEK_END);
     int m = (ftell(fnivelum) - 3*sizeof(int))/sizeof(Celula);
-    int hash_secundario;
 
     //Leitura da célula na posição hash de primeiro nível do registro a ser consultado.
     int posicao_primaria = hash(a, b, p, m, chave);
@@ -234,7 +235,7 @@ int consultaRegistro(int chave, int a, int b, int p){
 
     char filename[10] = "";
     sprintf(filename, "%d", posicao_primaria);
-    strcat(filename, "aloc");
+    strcat(filename, "aloc.dat");
 
     //Abertura do arquivo [índice_célula]aloc.dat.
     if (!(fniveldois = fopen(filename,"r"))) {

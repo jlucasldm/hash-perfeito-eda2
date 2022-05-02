@@ -17,7 +17,7 @@ int main(){
     scanf("%c", &entrada);
 
     //Consulta dos valores primo p, coeficientes a e b de hash de primeiro nível caso os arquivos já tenham sido inicializados.
-    f = fopen("nivelUm", "r+b");
+    f = fopen("nivelUm.dat", "r+b");
     if(f != NULL){
         fseek(f, -3*sizeof(int), SEEK_END);
         fread(&p, sizeof(int), 1, f);
