@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-#include "base.h"
 #include "impressao.h"
 #include "registros.h"
 
-int p = 101;
-int a = 3;
-int b = 42;
+//Definição de variáveis globais, caso queira atribuir. Caso contrário, apenas inicializar.
+int p = 101;    //primo p.
+int a = 3;      //coeficiente de hash primeiro nível a
+int b = 42;     //coeficiente de hash primeiro nível b
 
 int main(){
     char entrada;
@@ -16,6 +16,7 @@ int main(){
     FILE *f;
     scanf("%c", &entrada);
 
+    //Consulta dos valores primo p, coeficientes a e b de hash de primeiro nível caso os arquivos já tenham sido inicializados.
     f = fopen("nivelUm", "r+b");
     if(f != NULL){
         fseek(f, -3*sizeof(int), SEEK_END);

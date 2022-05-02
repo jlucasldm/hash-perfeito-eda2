@@ -3,20 +3,34 @@
 
 #include "base.h"
 
+/*
+Função responsável por criar a tabela de nível um. Recebe um valor m (tamanho de registros a serem inseridos), o valor do primo p (global),
+e os coeficientes a e b para uso da função hash em nível primário.
+
+A função cria um arquivo contendo m células e, no final do arquivo, armazena os valores de p (global), e os coeficientes a e b de primeiro nível.
+*/
 int criaArquivoNivelUm(int m, int p, int a_global, int b_global) {
 	FILE *f;
 	
 	f = fopen("nivelUm", "r+b");
 
+	//Criação do arquivo da tabela de nível um "nivelUm".
 	if(f == NULL){
 		if (!(f = fopen("nivelUm","w+b"))){
 			printf ("Erro na criacao do arquivo \"nivelUm\".");
 			exit(-1);
 		}
 
+		//Inicialização de células vazias para inserção no arquivo
 		Celula c;
 		c.mtab = 0;
 
+		/*
+		Definição dos coeficientes de a e b referentes a célula.
+		Escolhemos definir manualmente os coeficientes de a e b para as células de índice 0, 2, 5 e 7
+		para controle e teste de acordo com os exemplos utilizados em sala e com os arquivos testes
+		disponibilizados.
+		*/
 		for (int i = 0; i < m; i++) {
 			if(i == 0 || i == 5){
 				c.a = 0;
@@ -34,6 +48,7 @@ int criaArquivoNivelUm(int m, int p, int a_global, int b_global) {
 			fwrite (&c, sizeof(Celula), 1, f);
 		}
 
+		//Escrita dos valores de p (global) e coeficientes de primeiro nível a e b no final do arquivo nivelUm.
 		fseek(f, 0, SEEK_END);
 		fwrite(&p, sizeof(int), 1, f);
 
@@ -47,11 +62,8 @@ int criaArquivoNivelUm(int m, int p, int a_global, int b_global) {
 }
 
 /*
-p = primo maior que todas as possíveis chaves
-a = coeficiente pertencente ao intervalo [1, p-1]
-b = coeficiente pertencente ao intervalo [0, p-1]
-m = quantidade de chaves, posições de distruibuição de chaves
-k = chave
+Função responsável por retornar o valor da função hash para um dado registro. Recebe os valores dos coeficientes de a e b, primo p,
+tamanho do arquivo m e chave do registro k.
 */
 int hash(int a, int b, int p, int m, int k){
     return (((a*k + b) % p) % m);
