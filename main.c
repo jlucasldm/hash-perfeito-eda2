@@ -1,3 +1,9 @@
+/*
+ * Estrutura de Dados e Algorítmos 2 - Hashing Perfeito
+ * Alunos: João Lucas Luca e Luca Argolo
+ * Prof: Flavio Assis
+ * */
+
 #include <stdio.h>
 
 #include "impressao.h"
