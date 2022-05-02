@@ -233,30 +233,36 @@ int consultaRegistro(int chave, int a, int b, int p){
     fseek(fnivelum, posicao_primaria * sizeof(Celula), SEEK_SET);
     fread(&c, sizeof(Celula), 1, fnivelum);
 
-    char filename[10] = "";
-    sprintf(filename, "%d", posicao_primaria);
-    strcat(filename, "aloc.dat");
+    if(c.mtab > 0) {
+        char filename[10] = "";
+        sprintf(filename, "%d", posicao_primaria);
+        strcat(filename, "aloc.dat");
 
-    //Abertura do arquivo [índice_célula]aloc.dat.
-    if (!(fniveldois = fopen(filename,"r"))) {
-        printf ("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filename);
-        exit(-1);
-    }
+        //Abertura do arquivo [índice_célula]aloc.dat.
+        if (!(fniveldois = fopen(filename, "r"))) {
+            printf("Erro na abertura do arquivo \"%s\" - Programa abortado\n", filename);
+            exit(-1);
+        }
 
-    //Leitura do registro na posição hash de segundo nível do registro a ser consultado.
-    int posicao_secundaria = hash(c.a, c.b, p, c.mtab*c.mtab, chave);
-    fseek(fniveldois, posicao_secundaria*sizeof(Registro), SEEK_SET);
-    fread(&r, sizeof(Registro), 1, fniveldois);
+        //Leitura do registro na posição hash de segundo nível do registro a ser consultado.
+        int posicao_secundaria = hash(c.a, c.b, p, c.mtab * c.mtab, chave);
+        fseek(fniveldois, posicao_secundaria * sizeof(Registro), SEEK_SET);
+        fread(&r, sizeof(Registro), 1, fniveldois);
 
-    //Checagem se o registro lido é o a ser consultado.
-    if(r.dado.chave == chave){
-        printf("chave: %d\n", r.dado.chave);
-        printf("%s\n", r.dado.nome);
-        printf("%d\n", r.dado.idade);
+        //Checagem se o registro lido é o a ser consultado.
+        if (r.dado.chave == chave) {
+            printf("chave: %d\n", r.dado.chave);
+            printf("%s\n", r.dado.nome);
+            printf("%d\n", r.dado.idade);
+        } else {
+            printf("chave nao encontrada: %d\n", chave);
+        }
+
+        fclose(fniveldois);
     }else{
         printf("chave nao encontrada: %d\n", chave);
     }
 
     fclose(fnivelum);
-    fclose(fniveldois);
+
 }
